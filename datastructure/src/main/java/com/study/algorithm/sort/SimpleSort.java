@@ -166,54 +166,7 @@ public class SimpleSort {
         }
     }
 
-    public static void quickSort(int[] arr , int startIndex ,int endIndex){
 
-        if (startIndex >= endIndex){
-            return;
-        }
-
-        int index = partition(arr,startIndex,endIndex);
-        quickSort(arr,startIndex,index-1);
-        quickSort(arr,index + 1,endIndex);
-    }
-
-
-    public static int partition(int[] arr ,int startIndex , int endIndex){
-        // 选取第一个元素为基准元素
-        int pivot = arr[startIndex];
-        // 数组左边指针
-        int left = startIndex;
-        // 数组右边指针
-        int right = endIndex;
-        //坑位，初始等于startIndex的位置
-        int index = startIndex;
-
-        while (right >= left){
-            while (right >= left){
-                // 右指针
-                if (arr[right] < pivot){
-                    arr[index] = arr[right];
-                    index = right;
-                    left ++;
-                    break;
-                }
-                right--;
-            }
-
-            while (right >= left){
-                if (arr[left] > pivot){
-                    arr[index] = arr[left];
-                    index = left;
-                    right--;
-                    break;
-                }
-                left++;
-            }
-        }
-        arr[index] = pivot;
-        return index;
-
-    }
 
 
     public static void main(String[] args) {
@@ -225,7 +178,7 @@ public class SimpleSort {
 //        int[] retsult = SimpleSort.shellSort(nums);
 //       SimpleSort.merge(nums,0,2,nums.length-1);`
 //        SimpleSort.mergeSort(nums, 0, nums.length - 1);
-        SimpleSort.quickSort(nums,0,nums.length-1);
+//        SimpleSort.quickSort(nums,0,nums.length-1);
         System.out.println(Arrays.toString(nums));
 //        System.out.println(Arrays.toString(retsult));
 

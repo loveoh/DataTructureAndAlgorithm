@@ -6,7 +6,27 @@ import java.util.Queue;
 import java.util.Stack;
 
 /**
- * Created by loveoh on 2020/5/17.
+ * 树的定义;
+ *  1、树是n（n>=0）个节点的有限集合。n=0时，为空树。
+ *  2、节点拥有的子树称为节点的度。度为0则表示该节点为叶子节点或终端节点。树的度是树内各结点的度的最大值。
+ *  3、结点的层次，从跟结点开始定义，根为第一层，子节点为第二层。结点的最大层次称为树的深度活高度。
+ * 二叉树：
+ *  1、n个节点的有限集合，n=0，称为空二叉树。由一个根节点和两棵互不相交的子树组成，分为左子树和右子树。
+ *  2、二叉树不存在度大于2的结点。且左子树和右子树不能颠倒顺序。
+ * 斜树：
+ *  1、所有节点都只有左子树称为左斜树，所有节点都只有右子树称为右斜树。
+ * 满二叉树：
+ *  在一棵二叉树中，所有分支节点都存在左子树和右子树，并且所有的叶子节点都在同一层中。
+ * 完全二叉树：
+ *  对一个n个结点的二叉树按层序编号，如果编号i的节点与同样深度的满二叉树中的编号i的位置相同，就是完全二叉树。
+ * 二叉树的性质：
+ *  1、在二叉树的第n层上至多存在2ⁿ﹣¹个节点
+ *  2、深度为n的二叉树最多有2ⁿ-1个结点
+ *  3、对任何一棵二叉树T，如果其终端结点数为n，度为2的结点的个数为k，则n = k + 1;
+ *  顺序存储二叉树性质：
+ *      父节点位置为n，则他的左孩子为2n+1,右孩子为2n+2
+ *      子结点的位置为n，父结点的位置为（n-1）/2
+ *
  */
 public class Tree {
 
@@ -22,6 +42,9 @@ public class Tree {
         if (input == null || input.isEmpty()) {
             return null;
         }
+//        LinkedList input = new LinkedList(Arrays.asList(new Integer[]{
+//                3, 2, 9, null, null, 10, null, null, 8, null, 4
+//        }));
 
         Object data = input.removeFirst();
         if (data != null) {
@@ -251,7 +274,8 @@ public class Tree {
         }));
 
         TreeNode treeNode = createBinaryTree(input);
-        System.out.println(isSameTree(treeNode,treeNode));
+        System.out.println(treeNode.getData());
+//        System.out.println(isSameTree(treeNode,treeNode));
 
         System.out.println("前序遍历：");
         preOrderTraveral(treeNode);
