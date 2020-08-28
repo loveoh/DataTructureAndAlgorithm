@@ -1,6 +1,6 @@
 package com.study.algorithm.sort;
 
-import java.util.Arrays;
+import java.util.*;
 
 /**
  * @ClassName SimpleSort
@@ -166,11 +166,96 @@ public class SimpleSort {
         }
     }
 
+    /**
+     * 计数排序
+     *
+     * @return
+     */
+    public static int[] countSort(int[] arr) {
+        //获取数组的最大值和最小值，并求出差值
+        int max = arr[0];
+        int min = arr[0];
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] < min) {
+                min = arr[i];
+            }
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+        }
+        int d = max - min;
+        int[] countArray = new int[d + 1];
+        //根据差值，创建计数数组，统计原数组元素出现的个数
+        for (int i = 0; i < arr.length; i++) {
+            countArray[arr[i] - min]++;
+        }
+        // 统计数组变形，后面元素等于前面元素之和
+        int sum = 0;
+        for (int i = 0; i < countArray.length; i++) {
+            sum += countArray[i];
+            countArray[i] = sum;
+        }
+        // 倒序遍历原始数组，从统计数组中找到正确的位置，放入到输出数组中
 
+        int[] sortedArray = new int[arr.length];
+        for (int i = arr.length - 1; i >= 0; i--) {
+            sortedArray[countArray[arr[i] - min] - 1] = arr[i];
+            countArray[arr[i] - min]--;
+        }
+        return sortedArray;
+    }
+
+
+    /**
+     * 桶排序
+     *
+     * @return
+     */
+    public static double[] bucketSort(double[] arr) {
+
+        //1、遍历原数组，得到最大值和最小值，然后算出两者差值d
+        double min = arr[0];
+        double max = arr[0];
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] < min) {
+                min = arr[i];
+            }
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+        }
+        double d = max - min;
+        //2、初始化桶，桶的长度为原数组一致
+        int buketNum = arr.length;
+        List<LinkedList<Double>> buketList = new ArrayList<>(buketNum);
+        for (int i = 0; i < buketNum; i++) {
+            buketList.add(new LinkedList<Double>());
+        }
+        //3、 遍历原始数组，将每个元素都放入桶中
+        for (int i = 0; i < arr.length; i++) {
+            int num = (int) ((arr[i] - min) * (buketNum - 1) / d);
+            buketList.get(i).add(arr[num]);
+
+        }
+        //4、对每个桶进行排序
+        for (int i = 0; i < buketNum; i++) {
+            Collections.sort(buketList.get(i));
+        }
+        //5、输出全部元素
+        double[] newArr = new double[arr.length];
+        int index = 0;
+        for (int i = 0; i < buketNum; i++) {
+            for (Double value : buketList.get(i)) {
+                newArr[index] = value;
+            }
+            index++;
+        }
+        return newArr;
+    }
 
 
     public static void main(String[] args) {
-        int[] nums = {2, 4, 5, 8, 1, 9, 22, 545, 78, 12,0};
+        int[] nums = {2, 4, 5, 8, 1, 9, 22, 545, 78, 12, 0};
 //        int[] nums = {7, 4, 1};
 //        int[] retsult = SimpleSort.selectSort(nums);
 //        int[] retsult = SimpleSort.insertSort(nums);
