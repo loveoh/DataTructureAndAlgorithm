@@ -16,47 +16,41 @@ import java.util.stream.Collectors;
 public class Test {
 
 
-    public  void aa() {
-        List<Map<String,Object>> lsl = new ArrayList<>();
-
-        Map<String,Object> map = new HashMap<>();
-        map.put("id", "1");
-        map.put("name", "zhangSan");
-        map.put("age","18");
-        lsl.add(map);
-
-        Map<String,Object> map2 = new HashMap<>();
-        map2.put("id", "2");
-        map2.put("name", "zhangSan");
-        map2.put("age","18");
-        lsl.add(map2);
-
-        Map<String,Object> map3 = new HashMap<>();
-        map3.put("id", "1");
-        map3.put("name", "wangwu");
-        map3.put("age","18");
-        lsl.add(map3);
-
-        Map<String,Object> map4 = new HashMap<>();
-        map4.put("id", "2");
-        map4.put("name", "zhaoliu");
-//        map4.put("age","19");
-        lsl.add(map4);
-
-        Map<Object, List<Map<String, Object>>> data = lsl.stream().collect(Collectors.groupingBy(this ::customKey));
-
-        System.out.println(data);
-
-    }
-    private  String customKey(Map<String,Object> map){
-
-
-        return String.valueOf(map.get("id")) + String.valueOf(map.get("age"));
-    }
-
     public static void main(String[] args) {
-        Test test = new Test();
-        test.aa();
+
+        MyLinkedList<Integer> linkedList = new MyLinkedList<>();
+
+        linkedList.add(3);
+        System.out.println(linkedList.get(0));
+        linkedList.add(1,22);
+        linkedList.add(0,221);
+        linkedList.remove(0);
+        System.out.println(linkedList);
+
+//        MyArrayList<Integer> arrayList = new MyArrayList<>();
+//        arrayList.add(1);
+//        arrayList.add(2);
+//        arrayList.add(3);
+//        arrayList.add(4);
+//        arrayList.add(4);
+//
+////        arrayList.remove(-1);
+//
+//        int index = arrayList.indexOf(3);
+//        System.out.println(index);
+//        System.out.println(arrayList.contains(2));
+//        arrayList.clear();
+//
+//        System.out.println(arrayList.size());
+//        System.out.println(arrayList.isEmpty());
+//
+//
+////        arrayList.add(2,11);
+////        arrayList.remove(0);
+//
+//        System.out.println(arrayList);
+
+
     }
 
 }
