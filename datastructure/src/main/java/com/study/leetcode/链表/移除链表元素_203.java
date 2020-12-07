@@ -53,8 +53,8 @@ public class 移除链表元素_203 {
                 prev.next = head.next;
             }else{
                 prev = head;
-                head = head.next;
             }
+            head = head.next;
         }
         return sentinel.next;
     }

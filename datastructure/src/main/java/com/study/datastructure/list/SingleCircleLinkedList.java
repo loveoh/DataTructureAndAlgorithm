@@ -1,21 +1,18 @@
 package com.study.datastructure.list;
 
 /**
- * @ClassName 单项链表
+ * @ClassName 单向循环链表
  * @Description
  * @Author za-yaowei
  * @Date 2020/11/30 10:12
  * @Version 1.0
  */
-public class MyLinkedList<E> implements MyList<E> {
+public class SingleCircleLinkedList<E> implements MyList<E> {
 
     private Node head;
     private int size;
 
 
-    MyLinkedList() {
-        head = new Node(null, null);
-    }
 
     class Node<E> {
         E element;
@@ -72,22 +69,49 @@ public class MyLinkedList<E> implements MyList<E> {
     public void add(int index, Object element) {
         rangeCheckForAdd(index);
 
-        Node<E> prevNode = index == 0 ? head : indexOfNode(index - 1);
-        Node<E> newNode = new Node<E>((E) element, null);
+        if(index == 0){
+            Node<E> newNode = new Node<E>((E) element, head);
+            // 获取最后一个节点
+            // 当size ==0 时，表示该链表是空。那该节点的last就指向自己。
+            Node<E> last = (size == 0 )? newNode : indexOfNode(size-1);
+            last.next = newNode;
 
-        newNode.next = prevNode.next;
-        prevNode.next = newNode;
+        }else{
+            Node<E> prevNode =  indexOfNode(index - 1);
+            Node<E> newNode = new Node<E>((E) element, prevNode.next);
+            prevNode.next = newNode;
+        }
         size++;
     }
 
     @Override
     public E remove(int index) {
         rangeCheck(index);
-        // 获取待删除的节点
-        Node node = indexOfNode(index);
-        Node oldNode = node;
-        node.element = node.next.element;
-        node.next = node.next.next;
+        Node oldNode = head;
+
+        if (index == 0 ){// 表示删除第一个元素
+            if (size == 1){// 表示链表只有一个参数
+                head = null;
+            }else{
+                // 获取链表最后一个节点
+                Node<E> last = indexOfNode(size -1 );
+                head = head.next;
+                last.next = head;
+            }
+
+        }else{
+            Node<E> node = indexOfNode(index -1 );
+            oldNode = node;
+            node.next = node.next.next;
+        }
+
+
+//
+//        // 获取待删除的节点
+//        Node node = indexOfNode(index);
+//        Node oldNode = node;
+//        node.element = node.next.element;
+//        node.next = node.next.next;
         size--;
         return (E) oldNode.element;
     }
