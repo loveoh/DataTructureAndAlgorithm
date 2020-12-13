@@ -13,7 +13,7 @@ public class MyLinkedList<E> implements MyList<E> {
     private int size;
 
 
-    MyLinkedList() {
+    public MyLinkedList() {
         head = new Node(null, null);
     }
 

@@ -53,6 +53,7 @@ public class 反转链表_206 {
         head3.next = head4;
 
         System.out.println(reverseList1(head).val);
+        System.out.println(head.val);
 
     }
 }
