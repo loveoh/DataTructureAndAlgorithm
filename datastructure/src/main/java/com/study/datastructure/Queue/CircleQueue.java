@@ -46,7 +46,7 @@ public class CircleQueue<E> {
     public void enQueue(E element) {
         // todo 数组扩容
         ensureCapacity(size + 1);
-        elements[(front + size) % elements.length] = element;
+        elements[index(size)] = element;
         size++;
 
     }
@@ -58,7 +58,7 @@ public class CircleQueue<E> {
         //数组扩容为原先的1.5倍
         E[] newElements = (E[]) new Object[(int) (elements.length * 1.5)];
         for (int index = 0; i < size; index++) {
-            newElements[index] = elements[(front + 1) % elements.length];
+            newElements[index] = elements[index(1)];
         }
         elements = newElements;
         //重置头结点
@@ -75,7 +75,7 @@ public class CircleQueue<E> {
         // 将队头的元素设置为null
         elements[front] = null;
         // 重新设置队头节点
-        front = (front + 1) % elements.length;
+        front = index(1);
         size--;
         return element;
     }
@@ -88,4 +88,10 @@ public class CircleQueue<E> {
     public E front() {
         return elements[front];
     }
+
+
+    int index(int num){
+        return (front + num) % elements.length;
+    }
+
 }
