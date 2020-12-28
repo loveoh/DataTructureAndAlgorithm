@@ -17,7 +17,7 @@ public class CircleDeque<E> {
     // 表示队头的索引位置
     private int front;
     // 表示队尾的索引位置
-    private int rear;
+//    private int rear;
     // 存储元素的数组
     E[] elements;
 
@@ -42,38 +42,78 @@ public class CircleDeque<E> {
             elements[i] = null;
         }
         size = 0;
-        front = rear = 0;
+        front = 0;
     }
 
+    /**
+     * 队尾入队
+     *
+     * @param element
+     */
     void enQueueRear(E element) {
 
         // todo 数组扩容
-        elements[rear + 1] = element;
-        rear++;
+
+        elements[front + size - 1] = element;
         size++;
     }
 
+    /**
+     * 队头出队
+     *
+     * @return
+     */
     E deQueueFront() {
-        E element = null;
-        if (front == rear) {// 表示队列只有一个节点
-            element = elements[front];
-            front = rear = 0;
-        }else{
-            element = elements[front];
-            front = (front + 1) % elements.length;
-        }
+        E element = elements[front];
+        elements[front] = null;
+        front = (front + 1) % elements.length;
         size--;
         return element;
     }
 
+    /**
+     * 队头入队
+     *
+     * @param element
+     */
     void enQueueFront(E element) {
+        // todo 数组扩容
+        ensureCapacity(size + 1);
+
+        front = index(-1);
+        elements[front] = element;
+        size++;
 
 
-        list.add(0);
     }
 
+    /**
+     *  数组扩容
+     * @param i
+     */
+    private void ensureCapacity(int i) {
+        if (i <= elements.length){
+            return;
+        }
+        E[] newElements = (E[]) new Object[(int) (elements.length * 1.5)];
+        for (int index = 0; i < size; i++ ){
+            newElements[i] = elements[front + i];
+        }
+        elements = newElements;
+        // 重置头结点
+        front = 0;
+    }
+
+    /**
+     * 队尾出队
+     *
+     * @return
+     */
     E deQueueRear() {
-        return (E) list.remove(list.size() - 1);
+        E element = elements[(front + size - 1) % elements.length];
+        elements[(front + size - 1) % elements.length] = null;
+        size--;
+        return element;
     }
 
     E front() {
@@ -81,10 +121,15 @@ public class CircleDeque<E> {
     }
 
     E rear() {
-        return (E) elements[rear];
+        return (E) elements[front + size - 1];
     }
 
-    int index(int index,int num){
+    int index(int index) {
 
+        index += front;
+        if (index < 0) {
+            return index + elements.length;
+        }
+        return index - (index >= elements.length ? elements.length : 0);
     }
 }
