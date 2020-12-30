@@ -1,8 +1,6 @@
 package com.study.datastructure.tree;
 
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * @ClassName BinarySearchTree
@@ -11,141 +9,12 @@ import java.util.Queue;
  * @Date 2020/12/24 11:26
  * @Version 1.0
  */
-public class BinarySearchTree<E> {
+public class BinaryTree<E> {
 
     // 二叉树结点的个数
-    private int size;
+    protected int size;
     // 根节点
-    private Node<E> root;
-    // 结点比较器
-    private Comparator<E> comparator;
-
-    public BinarySearchTree() {
-        this(null);
-    }
-
-    public BinarySearchTree(Comparator<E> comparator) {
-        this.comparator = comparator;
-    }
-
-    /**
-     * 添加结点
-     *
-     * @param element
-     */
-    public void add(E element) {
-        elementNotNullCheck(element);
-        // 如果是空树，直接赋值给root结点
-        if (root == null) {
-            root = new Node<>(element, null);
-            return;
-        }
-        // 找打父节点
-        Node node = root;
-        // 用于存储遍历的每个节点的父节点
-        Node parent = root;
-        int cmp;
-        do {
-            parent = node;
-            cmp = compare(element, (E) node.element);
-            if (cmp > 0) { // 插入的值大于当前节点的值
-                node = node.right;
-            } else if (cmp < 0) { // 插入的节点小于当前节点
-                node = node.left;
-            } else { // 相等
-                return;
-            }
-        } while (node != null);
-        // 需要插入到当前节点的右子树
-        if (cmp > 0) {
-            parent.right = new Node(element, parent);
-        } else {
-            parent.left = new Node(element, parent);
-        }
-        size++;
-    }
-
-    private int compare(E e1, E e2) {
-        if (comparator != null) {
-            return comparator.compare(e1, e2);
-        }
-        return ((Comparable<E>) e1).compareTo(e2);
-
-    }
-
-    public void remove(E element) {
-        remove(Node(element));
-    }
-
-    /**
-     * 删除二叉树结点
-     * 1、删除的节点度为0，该节点为叶子节点，直接删除就好。
-     * 2、删除的节点度为1，该节点只有一个子树，将该节点的parent的指针，指向该节点的子树
-     * 3、删除的节点度为2，找到该节点前驱结点，或者后继结点，将前驱结点或者后继结点的值覆盖原值，
-     * 并将该节点指向前驱结点或者后继结点的指针置为null
-     *
-     * @param node
-     */
-    private void remove(Node<E> node) {
-        if (node == null) {
-            return;
-        }
-        // 表示要删除的节点的度为2
-        if (node.hasTwoChildren()) {
-            //获取前驱结点
-            Node<E> proNode = predecessor(node);
-            // 将前驱结点的值覆盖要删除的结点
-            node.element = proNode.element;
-            node = proNode;
-        }
-        // 要删除的结点的度为0或者1
-        Node<E> replaceNode = node.left != null ? node.left : node.right;
-        if (replaceNode != null) { // 要删除的节点的度为1
-            // replaceNode 的父节点 指向node的父节点
-            replaceNode.parent = node.parent;
-            if (node.parent == null){ // 要删除的节点为root节点
-                root = replaceNode;
-            }else if (node == node.parent.right){
-                node.parent.right = replaceNode;
-            }else {
-                node.parent.left = replaceNode;
-            }
-        }else{
-            if (node.parent == null ){// 叶子节点并且是根节点
-                root = null;
-            }else if (node == node.parent.right){
-                node.parent.right = replaceNode;
-            }else {
-                node.parent.left = replaceNode;
-            }
-        }
-    }
-
-
-    /**
-     * 根据结点值，获取该节点
-     *
-     * @param element
-     * @return
-     */
-    private Node<E> Node(E element) {
-        if (element == null) {
-            return null;
-        }
-        Node<E> node = root;
-        while (node != null) {
-            int cmp = compare(element, node.element);
-            if (cmp == 0) {
-                return node;
-            } else if (cmp > 0) {
-                node = node.right;
-            } else {
-                node = node.left;
-            }
-        }
-        return null;
-    }
-
+    protected Node<E> root;
 
     /**
      * 二叉树的个数
@@ -166,7 +35,6 @@ public class BinarySearchTree<E> {
         size = 0;
     }
 
-
     /**
      * 前驱结点：二叉树中序遍历时，该节点的前一个节点为前驱结点
      * 获取节点的前驱结点；
@@ -178,7 +46,7 @@ public class BinarySearchTree<E> {
      * @param node
      * @return
      */
-    private Node<E> predecessor(Node<E> node) {
+    protected Node<E> predecessor(Node<E> node) {
         if (node == null) {
             return null;
         }
@@ -209,7 +77,7 @@ public class BinarySearchTree<E> {
      * @param node
      * @return
      */
-    private Node<E> successor(Node<E> node) {
+    protected Node<E> successor(Node<E> node) {
 
         if (node == null) {
             return null;
@@ -230,7 +98,6 @@ public class BinarySearchTree<E> {
         }
         return node.parent;
     }
-
 
     public void preOrderTraveral() {
         preOrderTraveral(root);
@@ -321,13 +188,12 @@ public class BinarySearchTree<E> {
     }
 
 
-    private void elementNotNullCheck(E element) {
-        if (element == null) {
-            throw new IllegalArgumentException("element must not be null");
-        }
+    protected Node<E> createNode(E element,Node<E> parent){
+        return new Node<>(element,parent);
     }
 
-    private static class Node<E> {
+
+    protected static class Node<E> {
         // 存储的元素
         E element;
         // 左子结点
@@ -359,6 +225,22 @@ public class BinarySearchTree<E> {
          */
         public boolean hasTwoChildren() {
             return left != null && right != null;
+        }
+
+        /**
+         *  判断该节点是否是左子结点
+         * @return
+         */
+        public boolean isLeftChild (){
+            return left == parent.left;
+        }
+
+        /**
+         *  判断该节点是否是右子结点
+         * @return
+         */
+        public boolean isRightChild(){
+            return right ==  parent.right;
         }
     }
 
