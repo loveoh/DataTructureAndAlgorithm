@@ -34,7 +34,18 @@ package com.study.leetcode.树;
  */
 public class 验证二叉搜索树_98 {
 
+
     public boolean isValidBST(TreeNode root) {
+
+
+
+
+
+        return checkBST(root,null,null);
+    }
+
+
+    public boolean isValidBST1(TreeNode root) {
 
         return checkBST(root,null,null);
     }

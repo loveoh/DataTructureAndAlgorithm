@@ -48,10 +48,10 @@ public class AVLTree<E> extends BST<E> {
     }
 
     /**
-     * 7
-     * /
-     * 5
-     * /
+     *      7
+     *     /
+     *    5
+     *   /
      * 4
      * 调整AVL树的平衡
      *
