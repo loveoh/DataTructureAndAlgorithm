@@ -111,7 +111,7 @@ public class BST<E> extends BinaryTree<E> {
             } else {
                 node.parent.left = replaceNode;
             }
-            afterRemove(node);
+            afterRemove(replaceNode);
         } else {
             if (node.parent == null) {// 叶子节点并且是根节点
                 root = null;

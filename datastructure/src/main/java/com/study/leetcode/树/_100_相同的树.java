@@ -12,7 +12,7 @@ import java.util.Queue;
  * @param
  * @return https://leetcode-cn.com/problems/same-tree/
  */
-public class 相同的树_100 {
+public class _100_相同的树 {
 
 
     /**
@@ -53,7 +53,7 @@ public class 相同的树_100 {
             TreeNode q1 = queue.poll();
 
             if (p1 == null && q1 == null) {
-
+                continue;
             } else if ((p1 == null && q1 != null) || (p1 != null && q1 == null) || (p1.val != q1.val)) {
                 return false;
             } else {

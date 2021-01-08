@@ -17,7 +17,7 @@ import java.util.List;
  * <p>
  * 返回其前序遍历: [1,3,5,6,2,4]。
  */
-public class N叉树的前序遍历_589 {
+public class _589_N叉树的前序遍历 {
 
     public List<Integer> preorder(Node root) {
         List<Integer> res = new ArrayList<>();

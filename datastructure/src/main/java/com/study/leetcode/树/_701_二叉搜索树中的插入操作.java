@@ -28,7 +28,7 @@ package com.study.leetcode.树;
  * 链接：https://leetcode-cn.com/problems/insert-into-a-binary-search-tree
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class 二叉搜索树中的插入操作_701 {
+public class _701_二叉搜索树中的插入操作 {
     public TreeNode insertIntoBST(TreeNode root, int val) {
         // 如果根节点是null
         if (root == null) {

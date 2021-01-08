@@ -29,7 +29,7 @@ import java.util.Queue;
  *
  *
  */
-public class 对称二叉树_101 {
+public class _101_对称二叉树 {
 
     /**
      *  思路：遍历每一个节点，节点的左子树要和节点的右子树保持一致

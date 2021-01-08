@@ -44,7 +44,7 @@ import com.study.datastructure.tree.Tree;
  * 链接：https://leetcode-cn.com/problems/delete-node-in-a-bst
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class 删除二叉搜索树中的节点_450 {
+public class _450_删除二叉搜索树中的节点 {
 
     public static TreeNode deleteNode(TreeNode root, int key) {
         if (root == null){

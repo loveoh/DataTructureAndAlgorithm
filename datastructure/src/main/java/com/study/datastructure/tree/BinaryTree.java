@@ -99,6 +99,48 @@ public class BinaryTree<E> {
         return node.parent;
     }
 
+    /**
+     * 求二叉树的高度
+     * @param root
+     * @return
+     */
+    public int hight(Node<E> root){
+        if (root == null){
+            return 0 ;
+        }
+        return 1 + Math.max(hight(root.left),hight(root.right));
+    }
+
+    /**
+     *  迭代求出树的高度
+     * @param root
+     * @return
+     */
+    public int high2(Node<E> root){
+        if (root == null){
+            return 0 ;
+        }
+
+        Queue<Node<E>> queue = new LinkedList<>();
+        queue.offer(root);
+        int num = 0;
+        while (!queue.isEmpty()){
+            num++;
+            for (int i =0;i< queue.size();i++){
+                Node<E> node = queue.poll();
+                if (node.left != null){
+                    queue.offer(node.left);
+                }
+                if (node.right != null){
+                    queue.offer(node.right);
+                }
+            }
+        }
+        return num;
+    }
+
+
+
     public void preOrderTraveral() {
         preOrderTraveral(root);
     }
@@ -241,6 +283,16 @@ public class BinaryTree<E> {
          */
         public boolean isRightChild(){
             return right ==  parent.right;
+        }
+
+        public Node<E> sibling(){
+            if (isLeftChild()){
+                return parent.right;
+            }
+            if (isRightChild()){
+                return parent.left;
+            }
+            return null;
         }
     }
 

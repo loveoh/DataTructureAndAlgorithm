@@ -32,7 +32,7 @@ package com.study.leetcode.树;
  * 链接：https://leetcode-cn.com/problems/validate-binary-search-tree
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class 验证二叉搜索树_98 {
+public class _98_验证二叉搜索树 {
 
 
     public boolean isValidBST(TreeNode root) {

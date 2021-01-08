@@ -12,7 +12,7 @@ import java.util.Queue;
  * <p>
  * https://leetcode-cn.com/problems/invert-binary-tree/
  */
-public class 翻转二叉树_226 {
+public class _226_翻转二叉树 {
 
     /**
      * 思路：

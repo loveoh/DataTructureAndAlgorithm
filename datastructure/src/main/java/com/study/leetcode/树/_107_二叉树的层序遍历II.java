@@ -28,7 +28,7 @@ import java.util.*;
  * 链接：https://leetcode-cn.com/problems/binary-tree-level-order-traversal-ii
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class 二叉树的层序遍历II_107 {
+public class _107_二叉树的层序遍历II {
 
     /**
      * 思路： 使用层序遍历，获取到每一层的节点，然后将每一层的节点放如到一个list中。
