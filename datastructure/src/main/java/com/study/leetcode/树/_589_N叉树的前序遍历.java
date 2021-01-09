@@ -1,7 +1,8 @@
 package com.study.leetcode.树;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.util.CollectionUtils;
+
+import java.util.*;
 
 /**
  * 589. N叉树的前序遍历
@@ -27,9 +28,48 @@ public class _589_N叉树的前序遍历 {
     }
 
     /**
-     *   都是套路：
-     *      多叉树的前序遍历，前序遍历就是在循环子结点之前做自己的逻辑操作
-     *      多叉树的后续遍历，就是在循环遍历子结点之后做自己的逻辑操作
+     * 后续遍历，先递归遍历节点，在操作节点
+     * @param node
+     * @param res
+     */
+    private void postOrder(Node node, List<Integer> res) {
+        if (node == null) {
+            return;
+        }
+        for (Node child : node.children){
+            postOrder(child,res);
+        }
+        res.add(node.val);
+    }
+
+    /**
+     *  后续遍历，迭代
+     *  先遍历子结点子树，再遍历根节点
+     * @param node
+     * @return
+     */
+    public List<Integer>  postOrder1(Node node) {
+        List<Integer> res = new ArrayList<>();
+        LinkedList<Node> stack = new LinkedList<Node>();
+        if (node == null) return res;
+        stack.add(node);
+        while (!stack.isEmpty()){
+            Node node1 = stack.poll();
+            res.add(node1.val);
+            for (Node child :node1.children){
+                stack.push(child);
+            }
+        }
+        // 将list翻转，得到的就是后续遍历的节点
+        Collections.reverse(res);
+        return res;
+    }
+
+    /**
+     * 都是套路：
+     * 多叉树的前序遍历，前序遍历就是在循环子结点之前做自己的逻辑操作
+     * 多叉树的后续遍历，就是在循环遍历子结点之后做自己的逻辑操作
+     *
      * @param node
      * @param res
      */
@@ -43,7 +83,28 @@ public class _589_N叉树的前序遍历 {
         }
     }
 
+    /**
+     * 迭代 前序遍历
+     * @param node
+     */
+    public List<Integer> perorder1(Node node) {
+        List<Integer> res = new ArrayList<>();
+        LinkedList<Node> stack = new LinkedList<Node>();
+        if (node == null) return res;
 
+        stack.add(node);
+        while (!stack.isEmpty()){
+            // 取出链表中最后一个元素
+            Node curNode = stack.pollLast();
+            res.add(curNode.val);
+            // 翻转子结点
+            Collections.reverse(curNode.children);
+            for (Node child :curNode.children){
+                stack.add(child);
+            }
+        }
+        return res;
+    }
 }
 
 class Node {
