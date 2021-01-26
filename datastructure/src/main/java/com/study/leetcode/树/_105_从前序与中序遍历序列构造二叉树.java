@@ -1,7 +1,8 @@
 package com.study.leetcode.树;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * 根据一棵树的前序遍历与中序遍历构造二叉树。
@@ -63,10 +64,38 @@ public class _105_从前序与中序遍历序列构造二叉树 {
         return node;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         int[] preorder = {3,9,20,15,7};
         int[] inorder = {9,3,15,20,7};
 
         buildTree(preorder,inorder);
+
+        System.out.println(getMonthBetween("2020-11-11","2020-12-23"));
+
+
+    }
+
+
+
+    public static List<String> getMonthBetween(String minDate, String maxDate) throws ParseException {
+        ArrayList<String> result = new ArrayList<String>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");//格式化为年月
+
+        Calendar min = Calendar.getInstance();
+        Calendar max = Calendar.getInstance();
+
+        min.setTime(sdf.parse(minDate));
+        min.set(min.get(Calendar.YEAR), min.get(Calendar.MONTH), 1);
+
+        max.setTime(sdf.parse(maxDate));
+        max.set(max.get(Calendar.YEAR), max.get(Calendar.MONTH), 2);
+
+        Calendar curr = min;
+        while (curr.before(max)) {
+            result.add(sdf.format(curr.getTime()));
+            curr.add(Calendar.MONTH, 1);
+        }
+        min = null;max = null;curr = null;
+        return result;
     }
 }
