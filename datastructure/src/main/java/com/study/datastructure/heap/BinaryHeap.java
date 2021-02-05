@@ -19,31 +19,59 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
 
 
     public BinaryHeap(E[] elements, Comparator comparator) {
-        if (elements == null || elements.length <= DEFAULT_CAPACITY){
+        super(comparator);
+        if (elements == null || elements.length == 0 ) {
             this.elements = (E[]) new Object[DEFAULT_CAPACITY];
-        }else{
-            this.elements = elements;
+        } else {
+            size = elements.length;
+            int capacity = Math.max(elements.length, DEFAULT_CAPACITY);
+            this.elements = (E[]) new Object[capacity];
+            for (int i = 0; i < elements.length; i++) {
+                this.elements[i] = elements[i];
+            }
+            //批量建立堆
+            heapify();
+        }
+    }
+
+    /**
+     * 批量建堆
+     *  自上而下的上滤
+     *  1、从根节点的下一个结点开始，每个节点都进行上滤操作
+     *  自下而上的下滤
+     *  2、从最后一个非叶子节点开始，每个节点都进行下滤操作。
+     *
+     */
+    private void heapify() {
+        // 自上而下的上滤 时间复杂度 O(nlog(n))
+//        for (int i = 1; i < size; i++) {
+//            siftUp(i);
+//        }
+        // 自下而上的下滤 O(n)
+        // 完全二叉树最后一个非叶子节点为 size / 2 ，其在数组中的索引为 (size / 2) - 1
+        for (int i = (size / 2) - 1; i >= 0; i--) {
+            siftDown(i);
         }
     }
 
 
     public BinaryHeap(Comparator comparator) {
-        this(null,comparator);
+        this(null, comparator);
     }
 
     public BinaryHeap(E[] elements) {
-        this(elements,null);
+        this(elements, null);
     }
 
     public BinaryHeap() {
-        this(null,null);
+        this(null, null);
 
     }
 
 
     @Override
     public void clear() {
-        size=0;
+        size = 0;
         for (int i = 0; i < size; i++) {
             elements[i] = null;
         }
@@ -51,7 +79,8 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
 
 
     /**
-     *  每次添加都添加到数组的最后一个元素，然后将添加的元素和父节点元素进行对比（上滤）
+     * 每次添加都添加到数组的最后一个元素，然后将添加的元素和父节点元素进行对比（上滤）
+     *
      * @param element
      */
     @Override
@@ -60,7 +89,6 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
         ensureCapacity(size + 1);
         // 将元素添加到数组最后
         elements[size] = element;
-
         siftUp(size);
         size++;
     }
@@ -69,6 +97,7 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
      * 元素上滤
      * 找到该元素的父元素，进行对比。该元素比父节点大的话，和父节点交换位置，直到父节点的索引小于0 停止循环
      * 元素没有父元素大，则停止循环
+     *
      * @param index
      */
     private void siftUp(int index) {
@@ -81,7 +110,7 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
 //            if (cmp <= 0) {
 //                break;
 //            }
-                //交换位置
+        //交换位置
 //            E temp = parentElement;
 //            elements[parentIndex] = element;
 //            elements[index] = parentElement;
@@ -89,9 +118,9 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
 //        }
 
         E element = elements[index];
-        while (index > 0){
+        while (index > 0) {
             //获取父节点
-            int parentIndex = (index - 1) /2;
+            int parentIndex = (index - 1) / 2;
             E parentElement = elements[parentIndex];
             int cmp = compare(element, parentElement);
             if (cmp <= 0) {
@@ -113,20 +142,21 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
     }
 
     /**
-     *  删除二叉堆 就是删除root元素
-     *  1、将数组中的最后的元素替换掉根节点元素
-     *  2、删除最后元素
-     *  3、将替换后的元素和子结点进行比较。
-     *      如果node < 最大的子结点，两者替换位置
-     *      如果node >= 最大子结点，或者node没有子结点。退出循环。
-     *   该循环操作为下滤 O(logn)
+     * 删除二叉堆 就是删除root元素
+     * 1、将数组中的最后的元素替换掉根节点元素
+     * 2、删除最后元素
+     * 3、将替换后的元素和子结点进行比较。
+     * 如果node < 最大的子结点，两者替换位置
+     * 如果node >= 最大子结点，或者node没有子结点。退出循环。
+     * 该循环操作为下滤 O(logn)
+     *
      * @return
      */
     @Override
     public E remove() {
         emptyCheck();
         E element = elements[0];
-        elements[0] =  elements[size - 1];
+        elements[0] = elements[size - 1];
         elements[size - 1] = null;
         size--;
         siftDown(0);
@@ -135,21 +165,24 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
 
     /**
      * 下滤操作
+     *
      * @param index
      */
     private void siftDown(int index) {
         E element = elements[index];
-        while (index < size){
+        // 第一个叶子节点的索引 == 非叶子节点的数量
+        // 保证index位置是非叶子节点
+        while (index < size >> 1) {
             // 默认使用左子结点
             int childIndex = (index * 2) + 1;
             E child = elements[childIndex];
             int rightChildIndex = childIndex + 1;
             // 右子结点大于左子结点的情况，使用右子结点
-            if (rightChildIndex < size && compare(child,elements[rightChildIndex]) < 0 ){
+            if (rightChildIndex < size && compare(child, elements[rightChildIndex]) < 0) {
                 child = elements[rightChildIndex];
                 childIndex = rightChildIndex;
             }
-            if (compare(element,child) > 0){
+            if (compare(element, child) > 0) {
                 break;
             }
             elements[index] = child;
@@ -160,6 +193,7 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
 
     /**
      * 替换二叉堆的根节点
+     *
      * @param element
      * @return
      */
@@ -167,9 +201,9 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
     public E replace(E element) {
         elementNotNullCheck(element);
         E node = null;
-        if (size == 0){
+        if (size == 0) {
             elements[size++] = element;
-        }else {
+        } else {
             elements[0] = element;
             node = element;
             siftDown(0);
@@ -209,18 +243,18 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
 
     @Override
     public Object left(Object node) {
-        int index = ((int)node << 1) + 1;
+        int index = ((int) node << 1) + 1;
         return index >= size ? null : index;
     }
 
     @Override
     public Object right(Object node) {
-        int index = ((int)node << 1) + 2;
+        int index = ((int) node << 1) + 2;
         return index >= size ? null : index;
     }
 
     @Override
     public Object string(Object node) {
-        return elements[(int)node];
+        return elements[(int) node];
     }
 }
