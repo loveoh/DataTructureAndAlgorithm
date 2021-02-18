@@ -15,7 +15,8 @@ public class Main {
 //                new BubbleSort1(),
 //                new BubbleSort2(),
 //				new selectionSort(),
-                new MergeSort()
+//                new MergeSort(),
+                new QuickSort()
 
 //				new RadixSort()
 //				new InsertionSort1(),
