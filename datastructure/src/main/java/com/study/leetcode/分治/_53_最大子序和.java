@@ -40,6 +40,38 @@ package com.study.leetcode.分治;
 public class _53_最大子序和 {
 
 
+    /**
+     * 动态规划求解
+     * int[] nums = {-2,1,-3,4,-1,2,1,-5,4};
+     *
+     * @param nums
+     * @return
+     */
+    public static int maxSubArray1(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+//        int[] dp = new int[nums.length];
+        /**
+         * 初始状态：
+         *  假设dp(i) 是以nums[i]结尾的最大连续子序列之和
+         *
+         */
+        int dp = nums[0];
+        int max = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            // 状态转移方程
+            if (dp < 0) {
+                dp = nums[i];
+            } else {
+                dp = dp + nums[i];
+            }
+            max = Math.max(max,dp);
+        }
+        return max;
+    }
+
+
     public static int maxSubArray(int[] nums) {
         if (nums == null || nums.length == 0) {
             return 0;
@@ -49,12 +81,13 @@ public class _53_最大子序和 {
 
     /**
      * 分治算法求解
-     *  求出 [begin，end) 中的最大子序列和，首先找到中间索引，mid =（begin + end） / 2;
-     *  1 、最大值在begin -> mid 之间，此时只需要求出 [begin,mid) 中间的最大值
-     *  2、 最大值在 mid -> end之间，此时只需要求出 [mid ，end) 中间的最大值
-     *  3、 最大值横跨在分开后的两个数组之间的，从mid开始，向左求出最大的连续子序列的值leftMax，
-     *      从mid开始，向右求出最大的连续子序列的值rightMax。两者相加求出max、
-     *   然后从max，leftMax，rightMax 三个数中求出最大的值。以此来递归求出整个数组的最大的值。
+     * 求出 [begin，end) 中的最大子序列和，首先找到中间索引，mid =（begin + end） / 2;
+     * 1 、最大值在begin -> mid 之间，此时只需要求出 [begin,mid) 中间的最大值
+     * 2、 最大值在 mid -> end之间，此时只需要求出 [mid ，end) 中间的最大值
+     * 3、 最大值横跨在分开后的两个数组之间的，从mid开始，向左求出最大的连续子序列的值leftMax，
+     * 从mid开始，向右求出最大的连续子序列的值rightMax。两者相加求出max、
+     * 然后从max，leftMax，rightMax 三个数中求出最大的值。以此来递归求出整个数组的最大的值。
+     *
      * @param nums
      * @param begin
      * @param end
@@ -83,9 +116,9 @@ public class _53_最大子序和 {
 
 
     public static void main(String[] args) {
-//       int[] nums = {-2,1,-3,4,-1,2,1,-5,4};
-        int[] nums = {3, -7, 9, -2};
+       int[] nums = {-2,1,-3,4,-1,2,1,-5,4};
+//        int[] nums = {3, -7, 9, -2};
 
-        System.out.println(maxSubArray(nums));
+        System.out.println(maxSubArray1(nums));
     }
 }
