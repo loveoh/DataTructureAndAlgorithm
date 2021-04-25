@@ -43,7 +43,7 @@ public class QuickSort<T extends Comparable<T>> extends Sort<T> {
                 /**
                  * 从右边开始比较
                  * 右边的元素大于pivot，end--
-                 * 右边的元素小于pivot，右边元素的位置和左边指针当前元素的位置互换，并且end--
+                 * 右边的元素小于pivot，右边元素的位置和左边指针当前元素的位置互换，并且begin--
                  */
                 if (cmp(pivot, array[end]) < 0) {
                     end--;
