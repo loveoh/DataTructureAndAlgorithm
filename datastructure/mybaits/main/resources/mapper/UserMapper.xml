@@ -1,0 +1,14 @@
+<mapper namespace="test">
+	<!-- select标签，封装了SQL语句信息、入参类型、结果映射类型 -->
+	<select id="findUserById"
+		parameterType="pojo.User"
+		resultType="pojo.User" statementType="prepared">
+		SELECT * FROM backend_user_info WHERE mobile = #{mobile}
+<!--		 <if test="username != null and username !='' ">-->
+<!--			 AND userName like '%${username}'-->
+<!--			 <if test="mobile != null and mobile !=''">-->
+<!--				 AND 1=1-->
+<!--			 </if>-->
+<!--		 </if>-->
+	</select>
+</mapper>

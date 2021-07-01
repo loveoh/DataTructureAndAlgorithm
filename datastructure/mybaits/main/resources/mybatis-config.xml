@@ -1,0 +1,25 @@
+<configuration>
+	<!-- mybatis 数据源环境配置 -->
+	<environments default="dev">
+		<environment id="dev">
+			<!-- 配置数据源信息 -->
+			<dataSource type="DBCP">
+				<property name="driver" value="com.mysql.jdbc.Driver"></property>
+				<property name="url"
+					value="jdbc:mysql://rm-bp1dp71y66b0r97gj708.mysql.rds.aliyuncs.com:3306/tech_xflow_saas_00"></property>
+				<property name="username" value="za_dev_tfwsas"></property>
+				<property name="password" value="za_dev_tfwsas_259dd4"></property>
+			</dataSource>
+		</environment>
+	</environments>
+
+	<!-- 映射文件加载 -->
+	<mappers>
+		<!-- resource指定映射文件的类路径 -->
+		<mapper resource="mapper/UserMapper.xml"></mapper>
+		<!-- <mapper resource="mapper/UserMapper.xml"></mapper> -->
+		<!-- <mapper resource="mapper/UserMapper.xml"></mapper> -->
+		<!-- <mapper resource="mapper/UserMapper.xml"></mapper> -->
+		<!-- <mapper resource="mapper/UserMapper.xml"></mapper> -->
+	</mappers>
+</configuration>
